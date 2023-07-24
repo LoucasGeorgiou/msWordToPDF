@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Converter</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Nunito Sans', Arial, sans-serif;
+            background-color: #dbdbdb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            margin: 0; 
+        }
+
+        .content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .converter-form {
+            max-width: 400px;
+            padding: 40px;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: blue;
+            font-size: 250%;
+        }
+
+        .converter-form h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: blue;
+            margin-top: 0%;
+        }
+
+        .converter-form input[type="file"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 14px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-size: 24px;
+        }
+
+        .converter-form button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: rgb(17, 129, 228);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .converter-form button:hover {
+            background-color: rgb(17, 129, 228);
+        }
+
+        .links-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links-container a {
+            margin: 10px;
+            color: blue;
+            text-decoration: none;
+            font-size: 26.4px;
+        }
+
+        .provided-by {
+            font-size: 26.4px;
+            color: red;
+            margin-bottom: 20px; 
+        }
+
+        .success-message {
+            font-size: 28px;
+            color: blue; 
+            margin-top: 20px;
+            display: none; 
+        }
+
+        .download-link {
+            font-size: 36px; 
+            margin-top: 10px;
+            color: red; 
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Microsoft Word (DOC) to PDF Converter</h1>
+        <div class="converter-form">
+            <h2 style="color: blue">Convert Your Document</h2>
+            <form method="post" enctype="multipart/form-data" action="/" id="upload-form">
+                <input type="file" name="file">
+                <button type="submit">Convert to PDF</button>
+            </form>
+        </div>
+        <p class="provided-by">Provided by Loucas Georgiou</p>
+        <div class="links-container">
+            <a href="https://github.com/LoucasGeorgiou" target="_blank">GitHub Profile</a>
+            <a href="https://www.linkedin.com/in/loucas-georgiou-a4278819b" target="_blank">LinkedIn Profile</a>
+        </div>
+        <p class="success-message" id="success-message">Conversion Successful!</p>
+        <a href="" id="download-link" class="download-link">Download PDF</a>
+    </div>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var form = new FormData(this);
+            
+            fetch('/', { method: 'POST', body: form }).then(function(response) {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    
+    return response.text();
+}).then(function(url) {
+    var successMessage = document.getElementById('success-message');
+    var downloadLink = document.getElementById('download-link');
+
+    // show success message
+    successMessage.style.display = "block";
+
+    // show download link and set href to the signed URL
+    downloadLink.style.display = "block";
+    downloadLink.href = url;
+}).catch(function(error) {
+    console.log('There has been a problem with your fetch operation: ', error.message);
+});
+
+        });
+    </script>
+</body>
+</html>
